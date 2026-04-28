@@ -1,6 +1,7 @@
 "use client";
 
 
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -15,6 +16,21 @@ import {
 export default function SignUpPage() {
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const name = e.target.name.value;
+    const image = e.target.image.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    // console.log(name,image, email);
+    const {data, error} = await authClient.signUp.email({
+      name,
+      image,
+      email,
+      password,
+    })
+
+    console.log(data,error);
+    
   };
 
   return (
@@ -47,7 +63,7 @@ export default function SignUpPage() {
           }}
         >
           <Label>Email</Label>
-          <Input placeholder="john@example.com" />
+          <Input placeholder="Enter Your email" />
           <FieldError />
         </TextField>
 
