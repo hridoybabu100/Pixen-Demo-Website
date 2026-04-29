@@ -1,6 +1,5 @@
 "use client";
 
-
 import { authClient } from "@/lib/auth-client";
 import {
   Button,
@@ -12,8 +11,11 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+
+  const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,15 +24,18 @@ export default function SignUpPage() {
     const email = e.target.email.value;
     const password = e.target.password.value;
     // console.log(name,image, email);
-    const {data, error} = await authClient.signUp.email({
+    const { data, error } = await authClient.signUp.email({
       name,
       image,
       email,
       password,
-    })
 
-    console.log(data,error);
     
+    });
+    if(!error){
+      router.push('/')
+    }
+    console.log(data, error);
   };
 
   return (
